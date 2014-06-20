@@ -24,7 +24,19 @@ class LoadTest < Minitest::Test
 
   def test_it_prints_rows
     loader = Loader.new('./data/fixtures/fake.csv')
-    assert_equal "Allison", loader.parse_master
+    assert_equal "Allison", loader.parse_test
+  end
+
+  def test_it_cleans_zipcodes
+    loader = Loader.new
+    data = {zipcode: "7306"}
+    assert_equal "07306", loader.clean_zipcode(data)
+  end
+
+  def test_it_cleans_phone_numbers
+    loader = Loader.new
+    data = {homephone: "(321- )1231234"}
+    assert_equal "(321) 123-1234", loader.clean_phone_numbers(data)
   end
 
 
