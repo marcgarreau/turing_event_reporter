@@ -22,5 +22,10 @@ class LoadTest < Minitest::Test
     refute_equal loader, loader2
   end
 
+  def test_it_prints_rows
+    loader = Loader.new('./data/fixtures/fake.csv')
+    assert_equal "Allison", loader.parse_master
+  end
+
 
 end
