@@ -1,36 +1,48 @@
 require 'pry'
 require 'csv'
+require './lib/person'
 
 class Loader
   attr_reader :contents, :csv, :queue
 
-  def initialize(file='./data/fixtures/fake.csv')
+  def initialize(file='./data/event_attendees.csv')
     @queue = []
     @contents = CSV.open(file, headers: true, header_converters: :symbol)
   end
 
-  # def cleaner(@contents)
-    # clean_zipcode
-    # clean_phone_numbers
-    # clean_caps
-  # end #returns a csv object(?)
+  def cleaner(contents)
+    clean_zipcode(contents)
+    clean_phone_numbers(contents) #add a new class?
+    clean_first_name(contents)
+    clean_last_name(contents)
+    clean_city(contents)
+    clean_street(contents)
+  end #returns a csv object(?)
+
+  def clean_first_name(data)
+    data[:first_name].downcase.capitalize
+  end
+
+  def clean_last_name(data)
+    data[:last_name].downcase.capitalize
+  end
+
+  def clean_city(data)
+    data[:city].downcase.capitalize
+  end
+
+  def clean_street(data)
+    data[:street].downcase.capitalize
+  end
 
   def clean_zipcode(data)
     data[:zipcode].to_s.rjust(5,"0")[0..4]
   end
 
   def clean_phone_numbers(data)
-    @digits = data[:homephone].chars.grep(/\d/).join      #select("() .-E")
+    @digits = data[:homephone].chars.grep(/\d/).join.rjust(10,"0")
     return "(%s) %s-%s" % [area_code, exchange, subscriber]
   end
-
-  #  def to_s
-  #    "(%s) %s-%s" % [area_code, exchange, subscriber]
-  #  end
-   #
-  #  def digits
-  #    data[:phone_number].delete(".-() ")
-  #  end
 
    def area_code
      @digits[-10..-8]
@@ -47,10 +59,16 @@ class Loader
   def parse_test
     puts "fuck it! we'll do it live!"
     @contents.each do |row|
-      name = row[:first_name]
-      puts name
-      return name
-    end  # Return a Queue instance?
+      first_name = clean_first_name(row)
+      last_name = clean_last_name(row)
+      city = clean_city(row)
+
+      puts "#{first_name} #{last_name} #{city}"
+
+      person = {first_name: first_name, last_name: last_name, city: city}
+      @queue << Person.new(first_name, last_name, city)
+    end
+    puts @queue
   end
 
 end

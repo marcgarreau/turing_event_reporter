@@ -22,10 +22,10 @@ class LoadTest < Minitest::Test
     refute_equal loader, loader2
   end
 
-  def test_it_prints_rows
-    loader = Loader.new('./data/fixtures/fake.csv')
-    assert_equal "Allison", loader.parse_test
-  end
+  # def test_it_prints_rows
+  #   loader = Loader.new('./data/fixtures/fake.csv')
+  #   assert_equal "Paul", loader.parse_test
+  # end
 
   def test_it_cleans_zipcodes
     loader = Loader.new
@@ -39,5 +39,40 @@ class LoadTest < Minitest::Test
     assert_equal "(321) 123-1234", loader.clean_phone_numbers(data)
   end
 
+  def test_it_handles_garbage_phone_numbers
+    loader = Loader.new
+    data = {homephone: "9.82E+00"} #if not 10 digits, then rjust with 0's
+    assert_equal "(000) 009-8200", loader.clean_phone_numbers(data)
+  end
+
+  def test_it_cleans_first_names
+    loader = Loader.new
+    data = {first_name: "paul"}
+    assert_equal "Paul", loader.clean_first_name(data)
+  end
+
+  def test_it_cleans_last_names
+    loader = Loader.new
+    data = {last_name: "fulghum"}
+    assert_equal "Fulghum", loader.clean_last_name(data)
+  end
+
+  def test_it_cleans_city
+    loader = Loader.new
+    data = {city: "DeNvEr"}
+    assert_equal "Denver", loader.clean_city(data)
+  end
+
+  def test_it_cleans_street
+    loader = Loader.new
+    data = {street: "blakE"}
+    assert_equal "Blake", loader.clean_street(data)
+  end
+
+  def test_parse_method_creates_a_person_object
+    loader = Loader.new('./data/fixtures/fake.csv')
+    loader.parse_test
+    assert_equal 1, loader.queue.length
+  end
 
 end
