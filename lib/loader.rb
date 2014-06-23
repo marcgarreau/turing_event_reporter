@@ -10,14 +10,14 @@ class Loader
     @contents = CSV.open(file, headers: true, header_converters: :symbol)
   end
 
-  def cleaner(contents)
-    clean_zipcode(contents)
-    clean_phone_numbers(contents) #add a new class?
-    clean_first_name(contents)
-    clean_last_name(contents)
-    clean_city(contents)
-    clean_street(contents)
-  end #returns a csv object(?)
+  # def cleaner(contents)
+  #   clean_zipcode(contents)
+  #   clean_phone_numbers(contents) #add a new class?
+  #   clean_first_name(contents)
+  #   clean_last_name(contents)
+  #   clean_city(contents)
+  #   clean_street(contents)
+  # end #returns a csv object(?)
 
   def clean_first_name(data)
     data[:first_name].downcase.capitalize
@@ -58,6 +58,7 @@ class Loader
 
   def parse_test
     puts "fuck it! we'll do it live!"
+    @queue = []
     @contents.each do |row|
       first_name = clean_first_name(row)
       last_name = clean_last_name(row)
@@ -69,6 +70,13 @@ class Loader
       @queue << Person.new(first_name, last_name, city)
     end
     puts @queue
+  end
+
+  def find_by(attribute, value)
+    selected = @queue.select do |person|
+      person[attribute] == value
+    end
+    return selected
   end
 
 end

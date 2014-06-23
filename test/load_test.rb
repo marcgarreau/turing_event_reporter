@@ -75,4 +75,18 @@ class LoadTest < Minitest::Test
     assert_equal 1, loader.queue.length
   end
 
+  def test_find_by_first_name
+    loader = Loader.new('./data/fixtures/fake.csv')
+    loader.parse_test
+    selected = loader.find_by(:first_name, "Paul")
+    assert_equal "Paul", selected.first[0]
+  end
+
+  def test_find_by_last_name
+    loader = Loader.new('./data/fixtures/fake.csv')
+    loader.parse_test
+    selected = loader.find_by(:last_name, "Fulghum")
+    assert_equal "Fulghum", selected.first[:last_name]
+  end
+
 end
