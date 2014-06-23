@@ -1,3 +1,5 @@
+require './lib/cleaner'
+
 class Attendee
   def self.build(data)
     cleaner = Cleaner.new
@@ -12,7 +14,7 @@ class Attendee
               :street,
               :city,
               :state,
-              :zipcode,
+              :zipcode
 
   def initialize(data, cleaner)
     @regdate       = data[:regdate]

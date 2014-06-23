@@ -1,30 +1,34 @@
 class Cleaner
+
+  # def initialize
+  # end
+
   def first_name(data)
-    data[:first_name].to_s.downcase.capitalize
+    data.to_s.downcase.capitalize
   end
 
   def last_name(data)
-    data[:last_name].to_s.downcase.capitalize
+    data.to_s.downcase.capitalize
   end
 
   def city(data)
-    data[:city].to_s.downcase.split.map(&:capitalize).join(' ')
+    data.to_s.downcase.split.map(&:capitalize).join(' ')
   end
 
   def street(data)
-    data[:street].to_s.downcase.split.map(&:capitalize).join(' ')
+    data.to_s.downcase.split.map(&:capitalize).join(' ')
   end
 
   def state(data)
-    data[:state].to_s.upcase
+    data.to_s.upcase
   end
 
   def zipcode(data)
-    data[:zipcode].to_s.rjust(5,"0")[0..4]
+    data.to_s.rjust(5,"0")[0..4]
   end
 
-  def phone_numbers(data)
-    @digits = data[:homephone].chars.grep(/\d/).join.rjust(10,"0")
+  def homephone(data)
+    @digits = data.chars.grep(/\d/).join.rjust(10,"0")
     return "(%s) %s-%s" % [area_code, exchange, subscriber]
   end
 

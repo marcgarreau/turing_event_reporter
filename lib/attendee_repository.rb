@@ -1,6 +1,6 @@
 require 'pry'
 require 'csv'
-require './lib/person'
+require './lib/attendee'
 require './lib/queue'
 
 class AttendeeRepository
@@ -15,6 +15,7 @@ class AttendeeRepository
     @contents.each do |row|
       @records << Attendee.build(row)
     end
+    return @records
   end
 
   # def initialize(file='./data/event_attendees.csv')
@@ -41,5 +42,5 @@ class AttendeeRepository
 end
 
 if __FILE__ == $0
-  Loader.new.parse_test
+
 end

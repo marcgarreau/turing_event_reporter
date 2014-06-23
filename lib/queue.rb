@@ -1,3 +1,5 @@
+require './lib/attendee_repository'
+
 class Queue
   attr_reader :results, :attendees
 

@@ -1,4 +1,4 @@
-require './lib/loader'
+require './lib/attendee_repository'
 require './lib/queue'
 
 require 'pry'
