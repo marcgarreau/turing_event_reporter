@@ -1,6 +1,8 @@
 require 'pry'
 require 'csv'
 require './lib/person'
+require './lib/queue'
+
 
 class Loader
   attr_reader :contents, :csv, :queue
@@ -54,26 +56,19 @@ class Loader
      @digits[-4..-1]
    end
 
-  def parse_test
+  def clean_people
     puts "fuck it! we'll do it live!"
     @queue = []
     @contents.each do |row|
-      regdate = row[:regdate]
-      first_name = clean_first_name(row)
-      last_name = clean_last_name(row)
-      email_address = row[:email_address]
-      homephone = clean_phone_numbers(row)
-      street = clean_street(row)
-      city = clean_city(row)
-      state = row[:state]
-      zipcode = clean_zipcode(row)
 
-      puts "#{first_name} #{last_name} #{city}"
+      first_name    = clean_first_name(row)
+      last_name     = clean_last_name(row)
+      homephone     = clean_phone_numbers(row)
+      street        = clean_street(row)
+      city          = clean_city(row)
+      zipcode       = clean_zipcode(row)
 
-      person = {regdate: regdate, first_name: first_name, last_name: last_name,
-        email_address: email_address, homephone: homephone, street: street,
-        city: city, state: state, zipcode: zipcode}
-      @queue << Person.new(regdate, first_name, last_name, email_address, homephone, street, city, state, zipcode)
+      @queue << Person.new(:regdate, first_name, last_name, :email_address, homephone, street, city, :state, zipcode)
     end
     puts @queue
   end

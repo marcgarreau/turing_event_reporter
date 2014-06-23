@@ -22,7 +22,7 @@ class LoadTest < Minitest::Test
 
   # def test_it_prints_rows
   #   loader = Loader.new('./data/fixtures/fake.csv')
-  #   assert_equal "Paul", loader.parse_test
+  #   assert_equal "Paul", loader.clean_people
   # end
 
   def test_it_cleans_zipcodes
@@ -69,22 +69,22 @@ class LoadTest < Minitest::Test
 
   def test_parse_method_creates_a_person_object
     loader = Loader.new('./data/fixtures/fake.csv')
-    loader.parse_test
+    loader.clean_people
     assert_equal 1, loader.queue.length
   end
 
   def test_find_by_first_name
     loader = Loader.new('./data/fixtures/fake.csv')
-    loader.parse_test
+    loader.clean_people
     selected = loader.find_by(:first_name, "Paul")
-    assert_equal "Paul", selected.first[:first_name]
+    assert_equal "Paul", selected.current_queue.first[:first_name]
   end
 
   def test_find_by_last_name
     loader = Loader.new('./data/fixtures/fake.csv')
-    loader.parse_test
+    loader.clean_people
     selected = loader.find_by(:last_name, "Fulghum")
-    assert_equal "Fulghum", selected.first[:last_name]
+    assert_equal "Fulghum", selected.current_queue.first[:last_name]
   end
 
 end
