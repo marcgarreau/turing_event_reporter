@@ -11,12 +11,6 @@ class Loader
   end
 
   # def cleaner(contents)
-  #   clean_zipcode(contents)
-  #   clean_phone_numbers(contents) #add a new class?
-  #   clean_first_name(contents)
-  #   clean_last_name(contents)
-  #   clean_city(contents)
-  #   clean_street(contents)
   # end #returns a csv object(?)
 
   def clean_first_name(data)
@@ -85,10 +79,12 @@ class Loader
   end
 
   def find_by(attribute, value)
-    selected = @queue.select do |person|
+    # Queue.new
+    # @current_queue = []
+    current_queue = @queue.select do |person|
       person[attribute] == value
     end
-    return selected
+    Queue.new(current_queue)
   end
 
 end
