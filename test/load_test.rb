@@ -65,8 +65,8 @@ class LoadTest < Minitest::Test
 
   def test_it_cleans_street
     loader = Loader.new
-    data = {street: "blakE"}
-    assert_equal "Blake", loader.clean_street(data)
+    data = {street: "1510 blakE st. uncw station"}
+    assert_equal "1510 Blake St. Uncw Station", loader.clean_street(data)
   end
 
   def test_parse_method_creates_a_person_object
@@ -79,7 +79,7 @@ class LoadTest < Minitest::Test
     loader = Loader.new('./data/fixtures/fake.csv')
     loader.parse_test
     selected = loader.find_by(:first_name, "Paul")
-    assert_equal "Paul", selected.first[0]
+    assert_equal "Paul", selected.first[:first_name]
   end
 
   def test_find_by_last_name
