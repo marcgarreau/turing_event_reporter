@@ -4,24 +4,50 @@ require './lib/attendee_repository'
 
 class QueueTest < Minitest::Test
   def test_it_exist
-    Queue.build([{regdate: "11/16/08 20:20", first_name: "Paul", last_name: "Fulghum", email_address: "cnroh@jumpstartlab.com", homephone: "(000) 009-8200", street: "Shohadaye Sadeghiye", city: "Tehran", state: "YK", zipcode: "14517"}])
+    queue = Queue.new
     assert Queue
   end
 
-  # def test_it_imports_a_current_queue
-  #   Queue.build([{regdate: "11/16/08 20:20", first_name: "Paul", last_name: "Fulghum", email_address: "cnroh@jumpstartlab.com", homephone: "(000) 009-8200", street: "Shohadaye Sadeghiye", city: "Tehran", state: "YK", zipcode: "14517"}])
-  #   assert_equal "Paul", Queue.current_queue.first[:first_name]
-  # end
-  #
-  # def test_that_clear_queue_clears_queue
-  #   Queue.build([{regdate: "11/16/08 20:20", first_name: "Paul", last_name: "Fulghum", email_address: "cnroh@jumpstartlab.com", homephone: "(000) 009-8200", street: "Shohadaye Sadeghiye", city: "Tehran", state: "YK", zipcode: "14517"}])
-  #   Queue.clear_queue
-  #   assert_equal 0, Queue.current_queue.length
-  # end
-  #
-  # def test_that_queue_count_gives_count
-  #   Queue.build([{regdate: "11/16/08 20:20", first_name: "Paul", last_name: "Fulghum", email_address: "cnroh@jumpstartlab.com", homephone: "(000) 009-8200", street: "Shohadaye Sadeghiye", city: "Tehran", state: "YK", zipcode: "14517"}])
-  #   assert_equal 1, Queue.queue_count
-  # end
+  def test_clear_erases_results
+    queue = Queue.new
+    queue.clear
+    assert_equal [], queue.results
+  end
+
+  def test_it_finds__by_first_name
+    queue = Queue.new
+    queue.find_by_first_name("Haines")
+    assert_equal 1, queue.results.count
+  end
+
+  def test_it_finds_by_last_name
+    queue = Queue.new
+    queue.find_by_last_name("Nguyen")
+    assert_equal 3, queue.results.count
+  end
+
+  def test_it_finds_by_city
+    queue = Queue.new
+    queue.find_by_city("Purchase")
+    assert_equal 12, queue.results.count
+  end
+
+  def test_it_finds_by_state
+    queue = Queue.new
+    queue.find_by_state("YK")
+    assert_equal 27, queue.results.count
+  end
+
+  def test_it_finds_by_zipcode
+    queue = Queue.new
+    queue.find_by_zipcode("91326")
+    assert_equal 1, queue.results.count
+  end
+
+  def test_it_counts_attendees
+    queue = Queue.new
+    queue.find_by_last_name("Nguyen")
+    assert_equal 3, queue.count
+  end
 
 end
