@@ -1,15 +1,24 @@
 class Queue
   attr_accessor :current_queue
 
-  def initialize(current_queue)
+  def self.build(current_queue)
     @current_queue = current_queue
+    new(current_queue)
   end
 
-  def clear_queue
+  def initialize(current_queue)
+    # @current_queue = current_queue
+  end
+
+  def self.current_queue
+    @current_queue
+  end
+
+  def self.clear_queue
     @current_queue = []
   end
 
-  def queue_count
+  def self.queue_count
     @current_queue.length
   end
 
@@ -18,9 +27,25 @@ class Queue
 
   end
 
-  def queue_print
-    
-
+  def self.queue_print
+    puts "LAST NAME".ljust(15) +
+      "FIRST NAME".ljust(15) +
+      "EMAIL".ljust(40) +
+      "ZIPCODE".ljust(10) +
+      "CITY".ljust(15) +
+      "STATE".ljust(10) +
+      "ADDRESS".ljust(30) +
+      "PHONE".ljust(15)
+    @current_queue.each do |person|
+      puts person[:last_name].ljust(15) +
+        person[:first_name].ljust(15) +
+        person[:email_address].ljust(40) +
+        person[:zipcode].ljust(10) +
+        person[:city].ljust(15) +
+        person[:state].ljust(10) +
+        person[:street].ljust(30) +
+        person[:homephone].ljust(15)
+    end
   end
 
 end

@@ -12,9 +12,6 @@ class Loader
     @contents = CSV.open(file, headers: true, header_converters: :symbol)
   end
 
-  # def cleaner(contents)
-  # end #returns a csv object(?)
-
   def clean_first_name(data)
     data[:first_name].to_s.downcase.capitalize
   end
@@ -24,7 +21,7 @@ class Loader
   end
 
   def clean_city(data)
-    data[:city].to_s.downcase.capitalize
+    data[:city].to_s.downcase.split.map(&:capitalize).join(' ')
   end
 
   def clean_street(data)
@@ -57,20 +54,20 @@ class Loader
    end
 
   def clean_people
-    puts "fuck it! we'll do it live!"
     @queue = []
     @contents.each do |row|
-
+      regdate       = row[:regdate]
       first_name    = clean_first_name(row)
       last_name     = clean_last_name(row)
+      email_address = row[:email_address]
       homephone     = clean_phone_numbers(row)
       street        = clean_street(row)
       city          = clean_city(row)
+      state         = row[:state]
       zipcode       = clean_zipcode(row)
 
-      @queue << Person.new(:regdate, first_name, last_name, :email_address, homephone, street, city, :state, zipcode)
+      @queue << Person.new(regdate, first_name, last_name, email_address, homephone, street, city, state, zipcode)
     end
-    puts @queue
   end
 
   def find_by(attribute, value)
@@ -79,7 +76,7 @@ class Loader
     current_queue = @queue.select do |person|
       person[attribute] == value
     end
-    Queue.new(current_queue)
+    Queue.build(current_queue)
   end
 
 end

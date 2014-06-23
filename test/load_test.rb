@@ -1,5 +1,5 @@
 require "./test/test_helper"
-
+require './lib/queue'
 require './lib/loader'
 
 class LoadTest < Minitest::Test
@@ -19,11 +19,6 @@ class LoadTest < Minitest::Test
     loader2 = Loader.new('./data/event_attendees2.csv')
     refute_equal loader, loader2
   end
-
-  # def test_it_prints_rows
-  #   loader = Loader.new('./data/fixtures/fake.csv')
-  #   assert_equal "Paul", loader.clean_people
-  # end
 
   def test_it_cleans_zipcodes
     loader = Loader.new
@@ -77,14 +72,14 @@ class LoadTest < Minitest::Test
     loader = Loader.new('./data/fixtures/fake.csv')
     loader.clean_people
     selected = loader.find_by(:first_name, "Paul")
-    assert_equal "Paul", selected.current_queue.first[:first_name]
+    assert_equal "Paul", Queue.current_queue.first[:first_name]
   end
 
   def test_find_by_last_name
     loader = Loader.new('./data/fixtures/fake.csv')
     loader.clean_people
     selected = loader.find_by(:last_name, "Fulghum")
-    assert_equal "Fulghum", selected.current_queue.first[:last_name]
+    assert_equal "Fulghum", Queue.current_queue.first[:last_name]
   end
 
 end
