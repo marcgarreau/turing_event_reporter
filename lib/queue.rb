@@ -31,6 +31,10 @@ class Queue
     @results = @attendees.select { |attendee| attendee.zipcode == value }
   end
 
+  def find(attribute, criterium)
+    @results = @attendees.select { |attendee| attendee.send(attribute) == criterium }
+  end
+
   def clear
     @results = []
   end
