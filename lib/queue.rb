@@ -9,41 +9,27 @@ class Queue
     @results   = []
   end
 
-  def find_by_first_name(value)
-    @results = @attendees.select { |attendee| attendee.first_name == value }
-  end
-
-  def find_by_last_name(value)
-    @results = @attendees.select { |attendee| attendee.last_name == value }
-    return @results
-  end
-
-  def find_by_city(value)
-    @results = @attendees.select { |attendee| attendee.city == value }
-    # return @results
-  end
-
-  def find_by_state(value)
-    @results = @attendees.select { |attendee| attendee.state == value }
-  end
-
-  def find_by_zipcode(value)
-    @results = @attendees.select { |attendee| attendee.zipcode == value }
-  end
-
   def find(attribute, criterium)
     @results = @attendees.select { |attendee| attendee.send(attribute) == criterium }
   end
 
   def clear
+    puts "Queue cleared!"
     @results = []
   end
 
   def count
-    @results.count
+    puts @results.count
   end
 
-  def queue_print
+  def queue_print(criteria)
+    if criteria.nil?
+      sort_criteria = 'last_name'
+    else
+      sort_criteria = criteria
+    end
+    # sort_criteria = criteria
+
     puts "LAST NAME".ljust(15) +
       "FIRST NAME".ljust(15) +
       "EMAIL".ljust(40) +
@@ -52,7 +38,11 @@ class Queue
       "STATE".ljust(10) +
       "ADDRESS".ljust(30) +
       "PHONE".ljust(15)
-    @results.each do |attendee|
+      # binding.pry
+    sorted_results = @results.sort_by do |attendee|
+      [attendee.send(sort_criteria), attendee.last_name, attendee.first_name]
+    end
+    sorted_results.each do |attendee|
       puts attendee.last_name.ljust(15) +
         attendee.first_name.ljust(15) +
         attendee.email_address.ljust(40) +

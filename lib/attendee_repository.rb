@@ -10,7 +10,6 @@ class AttendeeRepository
     @records  = []
     @contents = CSV.open(file, headers: true, header_converters: :symbol)
   end
-
   def build_people # have this take place in the initialize?
     @contents.each do |row|
       @records << Attendee.build(row)

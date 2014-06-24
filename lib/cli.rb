@@ -10,163 +10,101 @@ class Cli
     system('clear')
     puts "Welcome to EventReporter"
     input = '' # get rid of you lateR?
-    while !wants_to_quit?
+    while input != 'quit'
       print "Load Menu: load, help, or quit? \n"
       print ">"
-      parts = process_input(gets.chomp)
-      assigns_instructions(parts)
-      case @command
-      when "load"  # how to account for bad file path or garbage input w/out breaking?
-        if @parameters
-          AttendeeRepository.new(@parameters) && find_repl
-        else #@parameters == "" #|| returns error
-          AttendeeRepository.new && find_repl
-        # else#how do we reach else?
-        #   puts "error"
-        end
-      when "help" then Help.load_help
-      when wants_to_quit?
-      end
+      input = gets.strip
+      input_parser(input)
     end
   end
 
-  def find_repl
-    # system('clear')
+  def find_menu
     input = ''
-    while @command != 'quit'
-      print "Find Attendees Menu: find, help, or quit? \n"
+    while input != 'quit'
+      print "Find Menu: find <criteria> <attribute> \n"
       print ">"
-      parts = process_input(gets.chomp)
-      find_assigns_instructions(parts)
-      case @command
-      when "find"
-        puts "find things!"# do something
-        # binding.pry
-        q = Queue.new
-        @results = q.find(@attribute,@criteria)
-        puts "Queue created!"
-        q.queue_print
-        queue_repl
-      when "help" then Help.find_help
-      when "help find" then Help.find_command_help
-      # when "quit" then break
-      end
+      input = gets.strip
+      input_parser(input)
     end
   end
 
-  def find_assigns_instructions(parts)
-    if parts[0] == "find"
-      @command = parts[0]
-      @attribute = parts[1]
-      @criteria = format_parameters(parts[2..-1]) if parts[2]
-      # Queue.new.find(@attribute,@criteria)
-    elsif parts[0] == "help"
-      @command = parts[0]
-      @attribute = parts[1] if parts[1]
-    elsif parts[0] == "quit"
-        @command = parts[0]
-    else
-      puts "Invalid command."
-      # @command = parts[0]
-      # @parameters = format_parameters(parts[1..-1]) if parts[1..-1].include?(/.csv/)
-    end
-  end
-
-  def queue_repl
-    # system('clear')
+  def queue_menu
     input = ''
-    while @command != 'quit'
-      print "Queue Menu: queue count, queue clear, save, print, help, or quit? \n"
+    while input != 'quit'
+      print "Queue Menu: you know what to do, jerk \n"
       print ">"
-      parts = process_input(gets.chomp)
-      queue_assigns_instructions(parts)
-      case @command
-      when "find"
-        puts "find things!"# do something
-        # binding.pry
-        q = Queue.new
-        @results = q.find(@attribute,@criteria)
-        puts "Queue created!"
-        q.queue_print
-        queue_repl
-      when "help" then Help.find_help
-      when "help find" then Help.find_command_help
-      # when "quit" then break
-      end
+      input = gets.strip
+      input_parser(input)
     end
   end
 
-  def assigns_instructions(parts)
-    if parts[1] == "first_name"
-      @command = parts[0..1].join(" ")
-      @parameters = format_parameters(parts[2..-1])
+  def input_parser(input)
+    input = input.split(' ')
+    parameters = input[1..-1]
+    case input[0]
+    when "load" then load_command_parser(parameters)
+    when "find" then find_command_parser(parameters)
+    when "queue" then queue_command_parser(parameters)
+    when "help" then help_command_parser(parameters)
+    when "quit" then #quit
     else
-      @command = parts[0]
-      @parameters = format_parameters(parts[1..-1]) if parts[1..-1].include?(/.csv/)
+      puts "That is an invalid selection"
+    end
+
+  end
+
+  def load_command_parser(parameters)
+    if parameters == []
+      puts "Loading default file..."
+      AttendeeRepository.new
+      find_menu
+    elsif parameters =~ /.csv/
+      puts "Loading \'#{parameters}\'"
+      AttendeeRepository.new(parameters)
+      find_menu
+    else
+      puts "That looks like an invalid file."
     end
   end
 
-  def format_parameters(parameters)
-    parameters.join(' ').gsub(/["']/, '')
+  def find_command_parser(parameters)
+     attribute = parameters[0]
+     criteria = parameters[1..-1].join
+     @q = Queue.new
+     @results = @q.find(attribute, criteria)
+     if @results.empty?
+       puts "Nobody matches. Seek help!"
+    #  elsif #things don't work
+    #    puts "invalid command"
+     else
+       puts "Queue loaded"
+       queue_menu
+     end
+   end
+
+  def help_command_parser(parameters)
+     case parameters
+     when "load" then Help.load
+     when "queue" then Help.queue
+     when "find" then Help.find
+     else Help.help
+     end
   end
 
-  def wants_to_quit?
-    @command == "q" || @command == "quit"
+  def queue_command_parser(parameters)
+    queue_command = parameters[0]
+    if parameters[1] == 'by'
+     criteria = parameters[2..-1].join
+    elsif parameters[1] == 'to'
+     criteria = parameters[2..-1].join
+    end
+
+    case queue_command
+    when "print" then @q.queue_print(criteria)
+    when "save" then @q.save(criteria)
+    when "clear" then @q.clear
+    when "count" then @q.count
+    else puts "Invalid command. Seek help!"
+    end
   end
-
-  def process_input(input)
-    input.split(' ')
-  end
-
-  def load_help
-    puts "This is how you use the load..."
-  end
-
-  def wants_help?
-    @command == "h" || @command == "help"
-  end
-
-  # def start
-  #   puts "Welcome"
-  #   while command != "quit"
-  #     print "Enter your command (or 'help'): "
-  #     parts = process_input(gets.chomp)
-  #     assigns_instructions(parts)
-  #     execute_commands
-  #   end
-  #   puts "Goodbye."
-  # end
-
-  #
-  # def assigns_instructions(parts)
-  #   if parts[1] == "-r"
-  #     @command = parts[0..1].join(" ")
-  #     @parameters = format_parameters(parts[2..-1])
-  #   else
-  #     @command = parts[0]
-  #     @parameters = format_parameters(parts[1..-1])
-  #   end
-  # end
-  #
-  # def execute_commands
-  #   puts "Executing #{command}..."
-  #   case command
-  #   when "queue"
-  #     output = Queue.queue_print
-  #     puts output
-  #     output
-  #   when "lookup -r"
-  #     output = phone_book.reverse_lookup(parameters)
-  #     puts output
-  #     output
-  #   when "help"
-  #     puts 'You can use:
-  #     lookup "LastName, FirstName"
-  #     lookup "LastName"
-  #     lookup -r (###) ###-####'
-  #   else
-  #     puts "That's not a valid command. Type 'help' for valid commands."
-  #   end
-  # end
-
 end
