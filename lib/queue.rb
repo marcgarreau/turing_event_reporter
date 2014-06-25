@@ -34,7 +34,7 @@ class Queue
       "FIRST NAME".ljust(15) +
       "EMAIL".ljust(40) +
       "ZIPCODE".ljust(10) +
-      "CITY".ljust(15) +
+      "CITY".ljust(20) +
       "STATE".ljust(10) +
       "ADDRESS".ljust(30) +
       "PHONE".ljust(15)
@@ -48,7 +48,7 @@ class Queue
         attendee.first_name.ljust(15) +
         attendee.email_address.ljust(40) +
         attendee.zipcode.ljust(10) +
-        attendee.city.ljust(15) +
+        attendee.city.ljust(20) +
         attendee.state.ljust(10) +
         attendee.street.ljust(30) +
         attendee.homephone.ljust(15)
@@ -79,9 +79,7 @@ class Queue
           attendee.state+","+
           attendee.street+","+
           attendee.homephone
-
       end
     end
   end
-
 end
