@@ -1,7 +1,6 @@
 require 'pry'
 require 'csv'
 require './lib/attendee'
-require './lib/queue'
 
 class AttendeeRepository
   attr_reader :records
@@ -11,7 +10,7 @@ class AttendeeRepository
     @contents = CSV.open(file, headers: true, header_converters: :symbol)
   end
 
-  def build_people # have this take place in the initialize?
+  def build_people
     @contents.each do |row|
       @records << Attendee.build(row)
     end
