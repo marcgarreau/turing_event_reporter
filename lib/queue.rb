@@ -39,9 +39,7 @@ class Queue
       "ADDRESS".ljust(30) +
       "PHONE".ljust(15)
 
-    @sorted_results = @results.sort_by do |attendee|
-      [attendee.send(@sort_criteria), attendee.last_name, attendee.first_name]
-    end
+      sort_result
 
     @sorted_results.each do |attendee|
       puts attendee.last_name.ljust(15) +
@@ -55,12 +53,15 @@ class Queue
     end
   end
 
-  def save(to_file="xyz.csv")
-    @sort_criteria ||= 'last_name'
+  def sort_result
     @sorted_results = @results.sort_by do |attendee|
       [attendee.send(@sort_criteria), attendee.last_name, attendee.first_name]
     end
+  end
 
+  def save(to_file="default.csv")
+    @sort_criteria ||= 'last_name'
+    sort result
     CSV.open(to_file, "w") do |row|
       row << [ "LAST_NAME",
         "FIRST_NAME",
