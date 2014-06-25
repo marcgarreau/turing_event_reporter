@@ -32,11 +32,4 @@ module Help
     puts "\n[Queue Save Help]\nUsage: queue save to <filename>\nExample: queue save to fake.csv\nUse this command to save your current sorted queue to a .csv file.\n\n"
   end
 
-  # def self.queue_help
-  #   puts "You asked for help while in the queue repl. Coming soon..."
-  # end
-  #
-  # def self.queue_command_help
-  #   puts "You can try queue print, queue count, and queue save."
-  # end
 end
