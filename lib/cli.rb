@@ -9,7 +9,7 @@ class Cli
   def start
     system('clear')
     puts "Welcome to EventReporter"
-    input = '' # get rid of you lateR?
+    input = ''
     while input != 'quit'
       print "Load Menu: load, help, or quit? \n"
       print ">"
@@ -98,10 +98,10 @@ class Cli
     end
 
     case queue_command
-    when "print" then @q.queue_print(criteria)
-    when "save" then @q.save(criteria)
-    when "clear" then @q.clear
-    when "count" then @q.count
+    when "print" then @queue.queue_print(criteria)
+    when "save" then @queue.save(criteria)
+    when "clear" then @queue.clear
+    when "count" then @queue.count
     else puts "Invalid command. Seek help!"
     end
   end

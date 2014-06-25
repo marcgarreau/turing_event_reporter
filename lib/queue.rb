@@ -10,6 +10,7 @@ class Queue
   end
 
   def find(attribute, criterium)
+    @attendees ||= []
     @results = @attendees.select { |attendee| attendee.send(attribute) == criterium }
   end
 
