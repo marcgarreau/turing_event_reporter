@@ -65,13 +65,13 @@ class Queue
         "ADDRESS".ljust(30) +
         "PHONE".ljust(15)
       @sorted_results.each do |attendee|
-        file.puts attendee.last_name.ljust(15) +
-          attendee.first_name.ljust(15) +
-          attendee.email_address.ljust(40) +
-          attendee.zipcode.ljust(10) +
-          attendee.city.ljust(15) +
-          attendee.state.ljust(10) +
-          attendee.street.ljust(30) +
+        file.puts attendee.last_name + ' ' +
+          attendee.first_name + ' ' +
+          attendee.email_address + ' ' +
+          attendee.zipcode + ' ' +
+          attendee.city + ' ' +
+          attendee.state + ' ' +
+          attendee.street + ' ' +
           attendee.homephone.ljust(15)
       end
     end
