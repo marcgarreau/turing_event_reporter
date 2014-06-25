@@ -4,23 +4,25 @@ require './lib/cli'
 class CLITest < Minitest::Test
   attr_reader :cli
 
-  def setup
-    ldr = Loader.new
-    ldr.clean_people
-    # repository = EntryRepository.in("./test/fixtures")
-    # phone_book = PhoneBook.new(repository)
-    @cli ||= CLI.new(phone_book)
-  end
-
   def test_it_exists
-    skip
+    cli = Cli.new
     assert cli
   end
 
-  def test_it_has_a_command
-    skip
-    assert cli.command
+  def test_it_
+    cli = Cli.new
+    assert cli
   end
+
+# test queue menu
+# test find menu
+# test input parser
+# probably test input parser a few more times
+# test load command parser
+# test find command parser
+# test help command parser
+# test queue command parser
+
 
   def test_it_has_parameters
     skip
