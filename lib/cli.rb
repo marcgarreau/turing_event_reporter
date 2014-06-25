@@ -18,6 +18,7 @@ class Cli
       input = gets.strip
       input_parser(input)
     end
+    puts "Goodbye!"
   end
 
   def find_menu
@@ -71,11 +72,11 @@ class Cli
   end
 
   def find_command_parser(parameters)
-     attribute = parameters[0].downcase
-     criteria = parameters[1..-1].map(&:capitalize).join(' ')
-       if attribute == "state"
-         criteria.upcase!
-       end
+    attribute = parameters[0].downcase
+    criteria = parameters[1..-1].map(&:capitalize).join(' ')
+     if attribute == "state"
+       criteria.upcase!
+     end
      @queue = Queue.new(@repo)
      @results = @queue.find(attribute, criteria)
      if @results.empty?
