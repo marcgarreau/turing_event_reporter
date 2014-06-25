@@ -25,9 +25,9 @@ class Queue
 
   def queue_print(criteria)
     if criteria.nil?
-      sort_criteria = 'last_name'
+      @sort_criteria = 'last_name'
     else
-      sort_criteria = criteria
+      @sort_criteria = criteria
     end
 
     puts "LAST NAME".ljust(15) +
@@ -40,7 +40,7 @@ class Queue
       "PHONE".ljust(15)
 
     @sorted_results = @results.sort_by do |attendee|
-      [attendee.send(sort_criteria), attendee.last_name, attendee.first_name]
+      [attendee.send(@sort_criteria), attendee.last_name, attendee.first_name]
     end
 
     @sorted_results.each do |attendee|
@@ -56,23 +56,28 @@ class Queue
   end
 
   def save(to_file="xyz.csv")
+    @sort_criteria ||= 'last_name'
+    @sorted_results = @results.sort_by do |attendee|
+      [attendee.send(@sort_criteria), attendee.last_name, attendee.first_name]
+    end
+
     File.open(to_file, "w") do |file|
-      file.puts "LAST NAME",+
-        "FIRST NAME",+
-        "EMAIL",+
-        "ZIPCODE",+
-        "CITY",+
-        "STATE",+
-        "ADDRESS",+
-        "PHONE"
+      file.puts "LAST_NAME,"+
+        "FIRST_NAME,"+
+        "EMAIL_ADDRESS,"+
+        "ZIPCODE,"+
+        "CITY,"+
+        "STATE,"+
+        "STREET,"+
+        "HOMEPHONE"
       @sorted_results.each do |attendee|
-        file.puts attendee.last_name,+
-          attendee.first_name,+
-          attendee.email_address,+
-          attendee.zipcode,+
-          attendee.city,+
-          attendee.state,+
-          attendee.street,+
+        file.puts attendee.last_name+","+
+          attendee.first_name+","+
+          attendee.email_address+","+
+          attendee.zipcode+","+
+          attendee.city+","+
+          attendee.state+","+
+          attendee.street+","+
           attendee.homephone
 
       end
