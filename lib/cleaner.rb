@@ -1,8 +1,5 @@
 class Cleaner
 
-  # def initialize
-  # end
-
   def first_name(data)
     data.to_s.downcase.capitalize
   end

@@ -56,11 +56,11 @@ class Cli
   def load_command_parser(parameters)
     if parameters == []
       puts "Loading default file..."
-      AttendeeRepository.new
+      @repo = AttendeeRepository.new.build_people
       find_menu
-    elsif parameters =~ /.csv/
-      puts "Loading \'#{parameters}\'"
-      AttendeeRepository.new(parameters)
+    elsif parameters[0] =~ /.csv/
+      puts "Loading \'#{parameters[0]}\'"
+      @repo = AttendeeRepository.new(parameters[0]).build_people
       find_menu
     else
       puts "That looks like an invalid file."
@@ -70,12 +70,10 @@ class Cli
   def find_command_parser(parameters)
      attribute = parameters[0]
      criteria = parameters[1..-1].join
-     @q = Queue.new
-     @results = @q.find(attribute, criteria)
+     @queue = Queue.new(@repo)
+     @results = @queue.find(attribute, criteria)
      if @results.empty?
        puts "Nobody matches. Seek help!"
-    #  elsif #things don't work
-    #    puts "invalid command"
      else
        puts "Queue loaded"
        queue_menu
