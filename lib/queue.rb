@@ -61,24 +61,24 @@ class Queue
       [attendee.send(@sort_criteria), attendee.last_name, attendee.first_name]
     end
 
-    File.open(to_file, "w") do |file|
-      file.puts "LAST_NAME,"+
-        "FIRST_NAME,"+
-        "EMAIL_ADDRESS,"+
-        "ZIPCODE,"+
-        "CITY,"+
-        "STATE,"+
-        "STREET,"+
-        "HOMEPHONE"
+    CSV.open(to_file, "w") do |row|
+      row << [ "LAST_NAME",
+        "FIRST_NAME",
+        "EMAIL_ADDRESS",
+        "ZIPCODE",
+        "CITY",
+        "STATE",
+        "STREET",
+        "HOMEPHONE" ]
       @sorted_results.each do |attendee|
-        file.puts attendee.last_name+","+
-          attendee.first_name+","+
-          attendee.email_address+","+
-          attendee.zipcode+","+
-          attendee.city+","+
-          attendee.state+","+
-          attendee.street+","+
-          attendee.homephone
+        row << [ attendee.last_name,
+          attendee.first_name,
+          attendee.email_address,
+          attendee.zipcode,
+          attendee.city,
+          attendee.state,
+          attendee.street,
+          attendee.homephone ]
       end
     end
   end

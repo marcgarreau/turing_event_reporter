@@ -7,6 +7,7 @@ class Cli
   include Help
 
   def start
+    @queue = Queue.new([])
     system('clear')
     puts "Welcome to EventReporter"
     @quit = false
@@ -71,12 +72,10 @@ class Cli
 
   def find_command_parser(parameters)
      attribute = parameters[0].downcase
-     criteria = parameters[1..-1].join.capitalize
+     criteria = parameters[1..-1].map(&:capitalize).join(' ')
        if attribute == "state"
-       criteria = parameters[1..-1].join.upcase
-       else
-       criteria
-     end
+         criteria.upcase!
+       end
      @queue = Queue.new(@repo)
      @results = @queue.find(attribute, criteria)
      if @results.empty?
