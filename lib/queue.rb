@@ -38,10 +38,11 @@ class Queue
       "STATE".ljust(10) +
       "ADDRESS".ljust(30) +
       "PHONE".ljust(15)
-      # binding.pry
+
     @sorted_results = @results.sort_by do |attendee|
       [attendee.send(sort_criteria), attendee.last_name, attendee.first_name]
     end
+    
     @sorted_results.each do |attendee|
       puts attendee.last_name.ljust(15) +
         attendee.first_name.ljust(15) +

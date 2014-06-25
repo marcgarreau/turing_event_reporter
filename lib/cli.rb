@@ -22,7 +22,7 @@ class Cli
   def find_menu
     input = ''
     while input != 'back' && @quit == false
-      print "Find Menu: help, back, find <criteria> <attribute> \n"
+      print "Find Menu: help, back, find <attribute> <value> \n"
       print ">"
       input = gets.strip
       input_parser(input)
@@ -83,7 +83,8 @@ class Cli
    end
 
   def help_command_parser(parameters)
-     case parameters
+    command = parameters[0]
+     case command
      when "load" then Help.load
      when "queue" then Help.queue
      when "find" then Help.find
