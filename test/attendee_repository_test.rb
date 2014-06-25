@@ -25,25 +25,4 @@ class AttendeeRepositoryTest < Minitest::Test
     attendees = repo.build_people
     assert_equal Array, attendees.class
   end
-  #
-  # def test_parse_method_creates_a_person_object
-  #   loader = Loader.new('./data/fixtures/fake.csv')
-  #   loader.clean_people
-  #   assert_equal 1, loader.queue.length
-  # end
-  #
-  # def test_find_by_first_name
-  #   loader = Loader.new('./data/fixtures/fake.csv')
-  #   loader.clean_people
-  #   selected = loader.find_by(:first_name, "Paul")
-  #   assert_equal "Paul", Queue.current_queue.first[:first_name]
-  # end
-  #
-  # def test_find_by_last_name
-  #   # skip
-  #   loader = Loader.new('./data/fixtures/fake.csv')
-  #   loader.clean_people
-  #   selected = loader.find_by(:last_name, "Fulghum")
-  #   assert_equal "Fulghum", Queue.current_queue.first[:last_name]
-  # end
 end
