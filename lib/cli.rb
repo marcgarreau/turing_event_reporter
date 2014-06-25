@@ -42,7 +42,7 @@ class Cli
   def input_parser(input)
     input = input.split(' ')
     parameters = input[1..-1]
-    case input[0]
+    case input[0].downcase
     when "load" then load_command_parser(parameters)
     when "find" then find_command_parser(parameters)
     when "queue" then queue_command_parser(parameters)
@@ -70,8 +70,13 @@ class Cli
   end
 
   def find_command_parser(parameters)
-     attribute = parameters[0]
-     criteria = parameters[1..-1].join
+     attribute = parameters[0].downcase
+     criteria = parameters[1..-1].join.capitalize
+       if attribute == "state"
+       criteria = parameters[1..-1].join.upcase
+       else
+       criteria
+     end
      @queue = Queue.new(@repo)
      @results = @queue.find(attribute, criteria)
      if @results.empty?
