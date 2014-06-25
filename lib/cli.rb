@@ -11,8 +11,8 @@ class Cli
     puts "Welcome to EventReporter"
     @quit = false
     input = ''
-    while @quit == false #input != 'quit'
-      print "Load Menu: load, help, or quit? \n"
+    while @quit == false
+      print "Load Menu: load, help or quit? \n"
       print ">"
       input = gets.strip
       input_parser(input)
@@ -22,7 +22,7 @@ class Cli
   def find_menu
     input = ''
     while input != 'back' && @quit == false
-      print "Find Menu: find <criteria> <attribute> \n"
+      print "Find Menu: help, back, find <criteria> <attribute> \n"
       print ">"
       input = gets.strip
       input_parser(input)
