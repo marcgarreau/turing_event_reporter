@@ -88,12 +88,19 @@ class Cli
 
   def help_command_parser(parameters)
     command = parameters[0]
-     case command
-     when "load" then Help.load
-     when "queue" then Help.queue
-     when "find" then Help.find
-     else Help.help
-     end
+    case command
+    when "load" then Help.load
+    when "queue" then Help.queue
+    when "find" then Help.find
+    else Help.help
+    end
+    subcommand = parameters[1]
+    case subcommand
+    when "print" then Help.queue_print
+    when "count" then Help.queue_count
+    when "clear" then Help.queue_clear
+    when "save" then Help.queue_save
+    end
   end
 
   def queue_command_parser(parameters)

@@ -16,6 +16,22 @@ module Help
     puts "\n[Queue Help]\nUsage: queue count\nUsage: queue print\nUsage: queue print by <attribute>\nUsage: queue clear\nUsage: queue save to <filename>\n\n"
   end
 
+  def self.queue_print
+    puts "\n[Queue Print Help]\nUsage: queue print\nUse this command to print formatted queue results.\n\n"
+  end
+
+  def self.queue_count
+    puts "\n[Queue Count Help]\nUsage: queue count\nUse this command to display a tally of attendees in your current queue.\n\n"
+  end
+
+  def self.queue_clear
+    puts "\n[Queue Clear Help]\nUsage: queue clear\nUse this command to reset the current queue.\n\n"
+  end
+
+  def self.queue_save
+    puts "\n[Queue Save Help]\nUsage: queue save to <filename>\nExample: queue save to fake.csv\nUse this command to save your current sorted queue to a .csv file.\n\n"
+  end
+
   # def self.queue_help
   #   puts "You asked for help while in the queue repl. Coming soon..."
   # end
