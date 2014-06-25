@@ -6,7 +6,7 @@ require './lib/queue'
 class AttendeeRepository
   attr_reader :records
 
-  def initialize(file="/Users/marcgarreau/Dropbox/Projects/Turing/event_reporter/fake.csv")
+  def initialize(file="./data/event_attendees.csv")
     @records  = []
     @contents = CSV.open(file, headers: true, header_converters: :symbol)
   end

@@ -9,8 +9,9 @@ class Cli
   def start
     system('clear')
     puts "Welcome to EventReporter"
+    @quit = false
     input = ''
-    while input != 'quit'
+    while @quit == false #input != 'quit'
       print "Load Menu: load, help, or quit? \n"
       print ">"
       input = gets.strip
@@ -20,7 +21,7 @@ class Cli
 
   def find_menu
     input = ''
-    while input != 'quit'
+    while input != 'back' && @quit == false
       print "Find Menu: find <criteria> <attribute> \n"
       print ">"
       input = gets.strip
@@ -30,7 +31,7 @@ class Cli
 
   def queue_menu
     input = ''
-    while input != 'quit'
+    while input != 'back' && @quit == false
       print "Queue Menu: you know what to do, jerk \n"
       print ">"
       input = gets.strip
@@ -46,7 +47,8 @@ class Cli
     when "find" then find_command_parser(parameters)
     when "queue" then queue_command_parser(parameters)
     when "help" then help_command_parser(parameters)
-    when "quit" then #quit
+    when "back" then #
+    when "quit" then @quit = true
     else
       puts "That is an invalid selection"
     end
@@ -73,7 +75,7 @@ class Cli
      @queue = Queue.new(@repo)
      @results = @queue.find(attribute, criteria)
      if @results.empty?
-       puts "Nobody matches. Seek help!"
+       puts "Nobody matches. Make sure you have loaded a file. Seek help!"
      else
        puts "Queue loaded"
        queue_menu
@@ -90,19 +92,22 @@ class Cli
   end
 
   def queue_command_parser(parameters)
-    queue_command = parameters[0]
-    if parameters[1] == 'by'
-     criteria = parameters[2..-1].join
-    elsif parameters[1] == 'to'
-     criteria = parameters[2..-1].join
-    end
+    if !@queue.nil?
+      queue_command = parameters[0]
+      if parameters[1] == 'by'
+       criteria = parameters[2..-1].join
+      elsif parameters[1] == 'to'
+       criteria = parameters[2..-1].join
+      end
 
-    case queue_command
-    when "print" then @queue.queue_print(criteria)
-    when "save" then @queue.save(criteria)
-    when "clear" then @queue.clear
-    when "count" then @queue.count
-    else puts "Invalid command. Seek help!"
+      case queue_command
+      when "print" then @queue.queue_print(criteria)
+      when "save" then @queue.save(criteria)
+      when "clear" then @queue.clear
+      when "count" then @queue.count
+      else puts "Invalid command. Seek help!"
+      end
+    else puts "You must load a file and find by an attribute before you can use queue commands."
     end
   end
 end
