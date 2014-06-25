@@ -1,6 +1,4 @@
 require "./test/test_helper"
-# require './lib/cleaner'
-# require './lib/attendee'
 
 class CleanerTest < Minitest::Test
 
