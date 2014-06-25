@@ -74,6 +74,7 @@ class Queue
           attendee.state,+
           attendee.street,+
           attendee.homephone
+
       end
     end
   end
