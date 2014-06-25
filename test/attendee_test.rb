@@ -33,6 +33,43 @@ class AttendeeTest < Minitest::Test
     assert result.zipcode
   end
 
-  def test_it_knows_its_data
+  def test_it_knows_its_zip
+    result = Attendee.build(data)
+    assert result.zipcode =~ /31123/
+  end
+  
+  def test_it_knows_its_first_name
+    result = Attendee.build(data)
+    assert result.first_name =~ /Laura/
+  end
+  
+  def test_it_knows_its_last_name
+    result = Attendee.build(data)
+    assert result.last_name =~ /Smith/
+  end
+  
+  def test_it_knows_its_email
+    result = Attendee.build(data)
+    assert result.email_address =~ /la@smith.com/
+  end
+  
+  def test_it_knows_its_home_phone
+    result = Attendee.build(data)
+    assert result.homephone =~ /123-1234/
+  end
+  
+  def test_it_knows_its_adress
+    result = Attendee.build(data)
+    assert result.street =~ /Something/
+  end
+  
+  def test_it_knows_its_city
+    result = Attendee.build(data)
+    assert result.city =~ /Orlando/
+  end
+  
+  def test_it_knows_its_state
+    result = Attendee.build(data)
+    assert result.state =~ /FL/
   end
 end
