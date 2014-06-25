@@ -3,51 +3,60 @@ require './lib/queue'
 require './lib/attendee_repository'
 
 class QueueTest < Minitest::Test
+  def attendees
+    @attendees = []
+  end
+
   def test_it_exist
-    queue = Queue.new
+    queue = Queue.new(@attendees)
     assert Queue
   end
 
   def test_clear_erases_results
-    queue = Queue.new
+    queue = Queue.new(@attendees)
     queue.clear
     assert_equal [], queue.results
   end
 
-  def test_it_finds__by_first_name
-    queue = Queue.new
-    queue.find_by_first_name("Haines")
-    assert_equal 1, queue.results.count
+  def test_it_finds_by_first_name
+    repo = AttendeeRepository.new('./fake.csv').build_people
+    queue = Queue.new(repo)
+    queue.find(:first_name, "Paul")
+    assert_equal ["Paul"], queue.results.to_s.scan(/Paul/)
   end
 
   def test_it_finds_by_last_name
-    queue = Queue.new
-    queue.find_by_last_name("Nguyen")
-    assert_equal 3, queue.results.count
+    repo = AttendeeRepository.new('./fake.csv').build_people
+    queue = Queue.new(repo)
+    queue.find(:last_name, "Fulghum")
+    assert_equal ["Fulghum"], queue.results.to_s.scan(/Fulghum/)
   end
 
   def test_it_finds_by_city
-    queue = Queue.new
-    queue.find_by_city("Purchase")
-    assert_equal 12, queue.results.count
+    repo = AttendeeRepository.new('./fake.csv').build_people
+    queue = Queue.new(repo)
+    queue.find(:city, "Tehran")
+    assert_equal ["Tehran"], queue.results.to_s.scan(/Tehran/)
   end
 
   def test_it_finds_by_state
-    queue = Queue.new
-    queue.find_by_state("YK")
-    assert_equal 27, queue.results.count
+    repo = AttendeeRepository.new('./fake.csv').build_people
+    queue = Queue.new(repo)
+    queue.find(:state, "YK")
+    assert_equal ["YK"], queue.results.to_s.scan(/YK/)
   end
 
   def test_it_finds_by_zipcode
-    queue = Queue.new
-    queue.find_by_zipcode("91326")
-    assert_equal 1, queue.results.count
+    repo = AttendeeRepository.new('./fake.csv').build_people
+    queue = Queue.new(repo)
+    queue.find(:zipcode, "14517")
+    assert_equal ["14517"], queue.results.to_s.scan(/14517/)
   end
 
   def test_it_counts_attendees
-    queue = Queue.new
-    queue.find_by_last_name("Nguyen")
-    assert_equal 3, queue.count
+    repo = AttendeeRepository.new('./fake.csv').build_people
+    queue = Queue.new(repo)
+    queue.find(:zipcode, "14517")
+    assert_equal 1, queue.results.count
   end
-
 end
