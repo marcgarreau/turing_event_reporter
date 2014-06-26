@@ -1,4 +1,4 @@
-turing_event_reporter
+EventReporter - Turing Project 1
 =====================
 
-Project 1 - Tan, Andy, Marc
+Group: Tan, Andy, Marc
