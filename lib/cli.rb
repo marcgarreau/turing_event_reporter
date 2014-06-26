@@ -46,8 +46,8 @@ class Cli
     parameters = input[1..-1]
     case input[0].downcase
     when "load" then load_command_parser(parameters)
-    when "find" then find_command_parser(parameters)
-    when "queue" then queue_command_parser(parameters)
+    when "find" then find_command_parser(parameters) if parameters[0]
+    when "queue" then queue_command_parser(parameters) if parameters[0]
     when "help" then help_command_parser(parameters)
     when "back" then #
     when "quit" then @quit = true
@@ -79,7 +79,7 @@ class Cli
       false
     end
   end
-  
+
   def find_command_parser(parameters)
     attribute = parameters[0].downcase
     if attribute_validator(attribute)

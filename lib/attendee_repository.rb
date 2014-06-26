@@ -14,5 +14,4 @@ class AttendeeRepository
     @records = @contents.map {|row| Attendee.build(row)}
     return @records
   end
-
 end
