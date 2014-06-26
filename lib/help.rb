@@ -1,7 +1,7 @@
 module Help
 
   def self.help
-      puts "\n[Help Menu]\nFind specific help by entering 'help load', 'help find', or 'help queue'.\n\n"
+      puts "\n[Help Menu]\nFind specific help by entering e.g. 'help load', 'help find', or 'help queue'.\n\n"
   end
 
   def self.load
@@ -17,7 +17,7 @@ module Help
   end
 
   def self.queue_print
-    puts "\n[Queue Print Help]\nUsage: queue print\nUse this command to print formatted queue results.\n\n"
+    puts "\n[Queue Print Help]\nUsage: queue print\nUse this command to print formatted queue results. \nUse this command with the optional \"by\" operator and an attribute to print sorted by the attribute.\n\n"
   end
 
   def self.queue_count
@@ -29,7 +29,6 @@ module Help
   end
 
   def self.queue_save
-    puts "\n[Queue Save Help]\nUsage: queue save to <filename>\nExample: queue save to fake.csv\nUse this command to save your current sorted queue to a .csv file.\n\n"
+    puts "\n[Queue Save Help]\nUsage: queue save to <filename>\nExample: queue save to fake.csv\nUse this command to save your current sorted queue to a .csv file.\nUse this command with the optional \"by\" operator and an attribute to print sorted by the attribute.\n\n"
   end
-
 end

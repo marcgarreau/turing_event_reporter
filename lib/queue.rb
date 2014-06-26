@@ -29,7 +29,9 @@ class Queue
     else
       @sort_criteria = criteria
     end
-
+    
+    system('clear')
+    puts "Queue sorted by #{@sort_criteria}"
     puts "-".ljust(155,'-')
     puts "LAST NAME".ljust(15) +
       "FIRST NAME".ljust(15) +
@@ -63,7 +65,7 @@ class Queue
 
   def save(to_file="default.csv")
     @sort_criteria ||= 'last_name'
-    sort result
+    sort_result
     CSV.open(to_file, "w") do |row|
       row << [ "LAST_NAME",
         "FIRST_NAME",

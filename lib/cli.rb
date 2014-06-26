@@ -24,7 +24,8 @@ class Cli
   def find_menu
     input = ''
     while input != 'back' && @quit == false
-      print "Find Menu: help, back, find <attribute> <value> \n"
+      puts "File loaded."
+      puts "Find Menu: help, back, find <attribute> <value>"
       print ">"
       input = gets.strip
       input_parser(input)
@@ -34,7 +35,7 @@ class Cli
   def queue_menu
     input = ''
     while input != 'back' && @quit == false
-      print "Queue Menu: you know what to do, jerk \n"
+      puts "Queue Menu: queue count, queue clear, queue print (by), or queue save to (by)"
       print ">"
       input = gets.strip
       input_parser(input)
@@ -49,8 +50,9 @@ class Cli
     when "find" then find_command_parser(parameters) if parameters[0]
     when "queue" then queue_command_parser(parameters) if parameters[0]
     when "help" then help_command_parser(parameters)
-    when "back" then #
+    when "back" then
     when "quit" then @quit = true
+    when "q" then @quit = true
     else
       puts "That is an invalid selection"
     end
@@ -126,13 +128,15 @@ class Cli
        criteria = parameters[2..-1].join
       end
 
-      case queue_command
-      when "print" then @queue.queue_print(criteria)
-      when "save" then @queue.save(criteria)
-      when "clear" then @queue.clear
-      when "count" then @queue.count
-      else puts "Invalid command. Seek help!"
-      end
+      # if attribute_validator(criteria)
+        case queue_command
+        when "print" then @queue.queue_print(criteria)
+        when "save" then @queue.save(criteria)
+        when "clear" then @queue.clear
+        when "count" then @queue.count
+        else puts "Invalid command. Seek help!"
+        end
+      # end
     else puts "You must load a file and find by an attribute before you can use queue commands."
     end
   end
