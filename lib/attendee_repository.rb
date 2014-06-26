@@ -11,9 +11,7 @@ class AttendeeRepository
   end
 
   def build_people
-    @contents.each do |row|
-      @records << Attendee.build(row)
-    end
+    @records = @contents.map {|row| Attendee.build(row)}
     return @records
   end
 

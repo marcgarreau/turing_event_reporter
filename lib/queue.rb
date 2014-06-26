@@ -30,6 +30,7 @@ class Queue
       @sort_criteria = criteria
     end
 
+    puts "-".ljust(155,'-')
     puts "LAST NAME".ljust(15) +
       "FIRST NAME".ljust(15) +
       "EMAIL".ljust(40) +
@@ -38,6 +39,7 @@ class Queue
       "STATE".ljust(10) +
       "ADDRESS".ljust(30) +
       "PHONE".ljust(15)
+    puts "-".ljust(155,'-')
 
     @sorted_results = @results.sort_by do |attendee|
       [attendee.send(@sort_criteria), attendee.last_name, attendee.first_name]
