@@ -128,7 +128,7 @@ class Cli
        criteria = parameters[2..-1].join
       end
 
-      # if attribute_validator(criteria)
+      if (attribute_validator(criteria)) || (criteria.nil?)
         case queue_command
         when "print" then @queue.queue_print(criteria)
         when "save" then @queue.save(criteria)
@@ -136,7 +136,7 @@ class Cli
         when "count" then @queue.count
         else puts "Invalid command. Seek help!"
         end
-      # end
+      end
     else puts "You must load a file and find by an attribute before you can use queue commands."
     end
   end
