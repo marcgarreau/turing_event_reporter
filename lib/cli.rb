@@ -71,21 +71,34 @@ class Cli
     end
   end
 
+  def attribute_validator(attribute)
+    valid_attributes = %w(last_name first_name city state zipcode)
+    if valid_attributes.include?(attribute)
+      true
+    else
+      false
+    end
+  end
+  
   def find_command_parser(parameters)
     attribute = parameters[0].downcase
-    criteria = parameters[1..-1].map(&:capitalize).join(' ')
-     if attribute == "state"
-       criteria.upcase!
-     end
-     @queue = Queue.new(@repo)
-     @results = @queue.find(attribute, criteria)
-     if @results.empty?
-       puts "Nobody matches. Make sure you have loaded a file. Seek help!"
-     else
-       puts "Queue loaded"
-       queue_menu
-     end
-   end
+    if attribute_validator(attribute)
+      criteria = parameters[1..-1].map(&:capitalize).join(' ')
+      if attribute == "state"
+        criteria.upcase!
+      end
+      @queue = Queue.new(@repo)
+      @results = @queue.find(attribute, criteria)
+      if @results.empty?
+        puts "Nobody matches. Make sure you have loaded a file. Seek help!"
+      else
+        puts "Queue loaded"
+        queue_menu
+      end
+    else
+      puts "Invalid command. Seek help!"
+    end
+  end
 
   def help_command_parser(parameters)
     command = parameters[0]
